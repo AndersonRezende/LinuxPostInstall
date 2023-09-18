@@ -1,8 +1,7 @@
 #!/bin/bash
-inicio=$(date +%s)
+start_time=$(date +%s)
 
 echo "INICIANDO INSTALAÇÃO E CONFIGURAÇÃO AUTOMATIZADA"
-######### Linux mint -> sudo rm /etc/apt/preferences.d/nosnap.pref #########
 
 DOWNLOAD_FILES_DIR=~/Downloads/install
 if [ -d "$DOWNLOAD_FILES_DIR" ]; then 
@@ -14,7 +13,7 @@ fi
 cd $DOWNLOAD_FILES_DIR
 
 
-SOFTWARE_INSTALL_LIST=(
+APT_SOFTWARES_LIST=(
     snapd
     virtualbox
     telegram-desktop
@@ -39,6 +38,7 @@ SNAP_SOFTWARES_LIST=(
     dbeaver-ce
     spotify
     sublime-text
+    whatsapp-for-linux
 )
 
 
@@ -57,22 +57,22 @@ sudo add-apt-repository ppa:openjdk-r/ppa -y
 
 
 ######### APT LIST #########
-for nome_do_programa in ${SOFTWARE_INSTALL_LIST[@]}; do
-    if which $nome_do_programa > /dev/null; then # Só instala se já não estiver instalado
-        echo "[INSTALADO] - $nome_do_programa"
+for software_name in ${APT_SOFTWARES_LIST[@]}; do
+    if which $software_name > /dev/null; then # Só instala se já não estiver instalado
+        echo "[INSTALADO] - $software_name"
     else
-        sudo apt install "$nome_do_programa" -y
+        sudo apt install "$software_name" -y
     fi
 done
 ######### APT LIST #########
 
 
 ######### SNAP LIST #########
-for nome_do_programa in ${SNAP_SOFTWARES_LIST[@]}; do
-    if which $nome_do_programa > /dev/null; then # Só instala se já não estiver instalado
-        echo "[INSTALADO] - $nome_do_programa"
+for software_name in ${SNAP_SOFTWARES_LIST[@]}; do
+    if which $software_name > /dev/null; then # Só instala se já não estiver instalado
+        echo "[INSTALADO] - $software_name"
     else
-        sudo snap install "$nome_do_programa"
+        sudo snap install "$software_name"
     fi
 done
 ######### SNAP LIST #########
@@ -90,7 +90,6 @@ fi
 
 
 ######### APACHE #########
-    #sudo apt install -y apache2
 sudo ufw app list
 sudo ufw allow in "Apache"
 sudo systemctl restart apache2
@@ -100,107 +99,14 @@ then
     echo "Houve um erro ao instalar o apache"
     exit 1
 fi
+######### APACHE #########
 
 
 ######### MYSQL #########
-    #sudo apt-get install mysql-server mysql-client
-    #sudo a2enmod rewrite
-    #sudo apt install mysql-server
 PASSWORD='root'
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$PASSWORD';"
 sudo mysql -p"$PASSWORD" -e "flush privileges;"
-    #sudo mysql
-    #echo "Digite os seguintes comandos no terminal"
-    #echo "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';"
-    #echo "flush privileges;"
-    #ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'password';
-    #flush privileges;
-    #exit
-    #sudo mysql_secure_installation
-    # Defina as variáveis para preencher automaticamente as respostas. COLOQUE 'y' para sim ou 'n'
-    #MYSQL_ROOT_PASSWORD="root"
-    #VALIDATE_PASSWORD_COMPONENT="n"
-    #CHANGE_ROOT_PASSWORD="n"
-    #REMOVE_ANONYMOUS_USERS="n"  # Responda 'y' para remover usuários anônimos
-    #DISALLOW_ROOT_LOGIN="n"     # Responda 'y' para desativar login de root remotamente
-    #REMOVE_TEST_DATABASE="n"    # Responda 'y' para remover o banco de dados de teste
-    #RELOAD_PRIVILEGE_TABLES="y" # Responda 'y' para recarregar tabelas de privilégio
-
-    # Execute o comando mysql_secure_installation com as respostas automáticas
-    #echo "Preenchendo automaticamente as respostas para mysql_secure_installation..."
-    #echo "$MYSQL_ROOT_PASSWORD" > /tmp/mysql_secure_installation_input
-    #echo "$VALIDATE_PASSWORD_COMPONENT" > /tmp/mysql_secure_installation_input
-    #echo "$CHANGE_ROOT_PASSWORD" > /tmp/mysql_secure_installation_input
-    #echo "$REMOVE_ANONYMOUS_USERS" >> /tmp/mysql_secure_installation_input
-    #echo "$DISALLOW_ROOT_LOGIN" >> /tmp/mysql_secure_installation_input
-    #echo "$REMOVE_TEST_DATABASE" >> /tmp/mysql_secure_installation_input
-    #echo "$RELOAD_PRIVILEGE_TABLES" >> /tmp/mysql_secure_installation_input
-
-    #sudo mysql_secure_installation < /tmp/mysql_secure_installation_input
-
-    # Remova o arquivo de entrada temporária
-    #rm /tmp/mysql_secure_installation_input
 ######### MYSQL #########
-
-
-######### PHP #########
-    #sudo apt install php libapache2-mod-php php-mysql
-    #sudo apt install -y php-{common,mysql,xml,xmlrpc,curl,gd,imagick,cli,dev,imap,mbstring,opcache,soap,zip,intl}      #libs laravel
-    #sudo apt install -y composer
-    #curl -sS https://getcomposer.org/installer | php
-    #sudo mv composer.phar /usr/local/bin/composer
-    #sudo chmod +x /usr/local/bin/composer
-#sudo systemctl restart apache2
-#php -v
-#sudo echo "<?php phpinfo();" >> /var/www/html/info.php
-#firefox http://localhost/info.php
-######### PHP #########
-
-
-######### JAVA #########
-    #sudo add-apt-repository ppa:openjdk-r/ppa -y
-    #apt search openjdk
-    #sudo apt install default-jdk -y
-    #sudo apt install default-jre -y
-
-#Configuração do JAVA HOME
-javahome=$(cat /etc/environment | grep -c "JAVA_HOME")
-if [ $javahome -eq 0 ]; then
-    echo "Configurando o JAVA_HOME"
-
-    #Armazena output do comando na variável
-    resultado=$(update-alternatives --config java)
-    # Strings para determinar o começo e final da string
-    inicio="/usr/lib"
-    fim="bin/java"
-
-    pos_inicial=$(echo "$resultado" | grep -b -o "$inicio" | cut -d':' -f1)-2
-
-    # Verificar se a string de início foi encontrada
-    if [[ -n "$pos_inicial" ]]; then
-        # Extrair a parte do resultado a partir da posição inicial
-        parte="${resultado:$pos_inicial}"
-
-        # Encontrar a posição final da string no resultado
-        pos_final=$(echo "$parte" | grep -b -o "$fim" | cut -d':' -f1)
-
-        # Verificar se a string de fim foi encontrada
-        if [[ -n "$pos_final" ]]; then
-            # Extrair a parte do resultado até a posição final
-            parte="${parte:0:$pos_final}"
-        else
-            echo "Não foi possível configurar o JAVA_HOME."
-        fi
-
-        # Imprimir a parte capturada
-        echo "$parte"
-    else
-        echo "Não foi possível configurar o JAVA_HOME."
-    fi
-else
-    echo "O JAVA_HOME já foi definido."
-fi
-
 
 
 ######### INSTALL JETBRAINS IDE'S #########
@@ -230,9 +136,6 @@ for chave in "${!IDE_LIST_INSTALL[@]}"; do
     sudo rm -Rf /usr/share/applications/$chave.desktop
 
     # Descompacta arquivo e move para opt
-    #sudo tar vzxf $chave.tar.gz -C /opt/
-    #sudo mkdir /opt/$chave && sudo tar vzxf phpstorm.tar.gz -C /opt/$chave 
-    
     sudo tar vzxf $chave.tar.gz -C $TEMP_EXTRACT_DIR
     sudo mv $TEMP_EXTRACT_DIR/* /opt/$chave
 
@@ -256,13 +159,6 @@ done
 
 
 ######### INSTALL ARDUINO #########
-    #sudo add-apt-repository universe
-    #sudo apt install libfuse2
-    #wget https://downloads.arduino.cc/arduino-ide/nightly/arduino-ide_nightly-20230913_Linux_64bit.AppImage -O $DOWNLOAD_FILES_DIR/arduino.AppImage
-    #sudo chmod ugo+x $DOWNLOAD_FILES_DIR/arduino.AppImage
-    #sudo cp  $DOWNLOAD_FILES_DIR/arduino.AppImage /usr/bin
-
-
 wget https://downloads.arduino.cc/arduino-1.8.16-linux64.tar.xz -O arduino.tar.xz
 sudo tar xvf $DOWNLOAD_FILES_DIR/arduino.tar.xz -C $TEMP_EXTRACT_DIR
 sudo mv $TEMP_EXTRACT_DIR/* /opt/arduino
@@ -282,7 +178,7 @@ echo 'export PS1="\u@\h \[\e[94m\]\w \[\e[32m\]\$(parse_git_branch)\[\e[00m\]$ "
 
 source ~/.bashrc
 ######### CONFIGURANDO EXIBIÇÃO DO NOME DA BRANCH NO TERMINAL #########
-
+######### Linux mint -> sudo rm /etc/apt/preferences.d/nosnap.pref #########
 
 
 
@@ -294,7 +190,7 @@ sudo apt autoclean
 sudo apt autoremove -y
 # ---------------------------------------------------------------------- #
 
-fim=$(date +%s)
-tempo_decorrido=$((fim - inicio))
-echo "Tempo de execução do script: $tempo_decorrido segundos."
-echo "FINALIZADA A INSTALAÇÃO E CONFIGURAÇÃO AUTOMATIZADA!"
+end_time=$(date +%s)
+total_time=$((end_time - start_time))
+echo "Tempo de execução do script: $total_time segundos."
+echo "AMBIENTE CONFIGURADO E INSTALADO COM SUCESSO!"
