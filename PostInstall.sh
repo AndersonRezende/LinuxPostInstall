@@ -3,6 +3,7 @@ start_time=$(date +%s)
 
 echo "INICIANDO INSTALAÇÃO E CONFIGURAÇÃO AUTOMATIZADA"
 
+# Configurando um diretório de trabalho
 DOWNLOAD_FILES_DIR=~/Downloads/install
 if [ -d "$DOWNLOAD_FILES_DIR" ]; then 
     sudo rm -Rf $DOWNLOAD_FILES_DIR/*; 
@@ -12,7 +13,7 @@ else
 fi
 cd $DOWNLOAD_FILES_DIR
 
-
+# Lista de pacotes apt que devem ser instalados
 APT_SOFTWARES_LIST=(
     snapd
     virtualbox
@@ -34,14 +35,16 @@ APT_SOFTWARES_LIST=(
     npm
 )
 
+# Lista de snaps que devem ser instalados
 SNAP_SOFTWARES_LIST=(
     dbeaver-ce
+    postman
     spotify
     sublime-text
     whatsapp-for-linux
 )
 
-
+# Tenta atualizar o sistema
 if ! sudo apt-get update
 then
     echo "Não foi possível atualizar os repositórios. Verifique seu arquivo /etc/apt/sources.list"
@@ -56,6 +59,7 @@ sudo add-apt-repository ppa:openjdk-r/ppa -y
 ######### REPOSITORY LIST #########
 
 
+# Instalação dos pacotes apt
 ######### APT LIST #########
 for software_name in ${APT_SOFTWARES_LIST[@]}; do
     if which $software_name > /dev/null; then # Só instala se já não estiver instalado
@@ -67,6 +71,7 @@ done
 ######### APT LIST #########
 
 
+# Instalação dos snaps
 ######### SNAP LIST #########
 for software_name in ${SNAP_SOFTWARES_LIST[@]}; do
     if which $software_name > /dev/null; then # Só instala se já não estiver instalado
@@ -78,6 +83,7 @@ done
 ######### SNAP LIST #########
 
 
+# Instalação do Chrome
 ######### GOOGLE CHROME #########
 if dpkg -l | grep -q "chrome"; then
     echo "O Google Chrome já está instalado."
@@ -89,6 +95,7 @@ fi
 ######### GOOGLE CHROME #########
 
 
+# Configuração do apache
 ######### APACHE #########
 sudo ufw app list
 sudo ufw allow in "Apache"
@@ -102,6 +109,7 @@ fi
 ######### APACHE #########
 
 
+# Configuração do MySql
 ######### MYSQL #########
 PASSWORD='root'
 sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY '$PASSWORD';"
@@ -109,6 +117,7 @@ sudo mysql -p"$PASSWORD" -e "flush privileges;"
 ######### MYSQL #########
 
 
+# Configuração de algumas IDE`s
 ######### INSTALL JETBRAINS IDE'S #########
 declare -A IDE_LIST_INSTALL
 IDE_LIST_INSTALL[phpstorm]="https://download.jetbrains.com/webide/PhpStorm-2023.2.1.tar.gz?_ga=2.133236622.1667873579.1694237467-1335940619.1694237467&_gl=1*9hgx8r*_ga*MTMzNTk0MDYxOS4xNjk0MjM3NDY3*_ga_9J976DJZ68*MTY5NDI4NjkzOS4yLjEuMTY5NDI4Njk3NC4wLjAuMA.."
@@ -158,6 +167,7 @@ done
 
 
 
+# Instalação e configuração da IDE do arduino
 ######### INSTALL ARDUINO #########
 wget https://downloads.arduino.cc/arduino-1.8.16-linux64.tar.xz -O arduino.tar.xz
 sudo tar xvf $DOWNLOAD_FILES_DIR/arduino.tar.xz -C $TEMP_EXTRACT_DIR
