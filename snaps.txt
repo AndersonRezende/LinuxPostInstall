@@ -1,0 +1,13 @@
+dbeaver-ce
+discord
+postman
+spotify
+whatsapp-for-linux
+telegram-desktop
+
+arduino
+sublime-text --classic
+phpstorm --classic
+pycharm-professional --classic
+intellij-idea-ultimate --classic
+webstorm --classic
