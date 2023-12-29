@@ -1,3 +1,4 @@
+git
 snapd
 virtualbox
 gparted
