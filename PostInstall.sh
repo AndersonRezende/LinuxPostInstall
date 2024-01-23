@@ -22,7 +22,7 @@ update() {
 # 1 - Adicionar um arquivo com ".sh" no final do nome do arquivo no diretório /scripts
 # 2 - Adicionar #!/bin/bash no topo do arquivo
 run_scripts() {
-    scripts=$(find $(pwd)/scripts -type f -name "*.sh")
+    scripts=$(ls -1 scripts/*.sh | sort)
     for script in $scripts; do
         echo "[EXECUTANDO] - $script"
         sudo chmod +x $script
@@ -45,35 +45,37 @@ is_installed() {
 ## Função para instalar os snaps contidos no arquivo snaps.txt ##
 install_snaps() {
     if [ -f "snaps.txt" ]; then
-        while IFS= read -r snap_name; do
-            if [[ -n "$snap_name" ]]; then
-                if is_installed $snap_name; then # Só instala se já não estiver instalado
-                    echo "[INSTALADO] - $snap_name"
+        while IFS= read -r snap || [[ -n "$snap" ]]; do
+            # Ignorar linha em branco ou que começam com #
+            if [[ -n "$snap" && "$snap" != "#"* ]]; then
+                if is_installed $snap; then # Só instala se não estiver instalado
+                    echo "[INSTALADO] - $snap"
                 else
-                    echo "Instalando $snap_name"
-                    sudo snap install $snap_name > /dev/null 2>&1
-                    if is_installed $snap_name; then # Só instala se já não estiver instalado
-                        echo "[INSTALADO] - $snap_name"
+                    echo "Instalando o pacote: $snap"
+                    sudo apt install -y $snap > /dev/null 2>&1
+                    if is_installed $snap; then
+                        echo "[INSTALADO] - $snap"
                     fi
                 fi
             fi
         done < "snaps.txt"
     else
-        echo "Arquivo snaps.txt não encontrado!"
+        echo "Arquivo packages.txt não encontrado!"
     fi
 }
 
 ## Função para instalar os pacotes contidos no arquivo packages.txt ##
 install_packages() {
     if [ -f "packages.txt" ]; then
-        while IFS= read -r package; do
-            if [[ -n "$package" ]]; then
-                if is_installed $package; then # Só instala se já não estiver instalado
+        while IFS= read -r package || [[ -n "$package" ]]; do
+            # Ignorar linha em branco ou que começam com #
+            if [[ -n "$package" && "$package" != "#"* ]]; then
+                if is_installed $package; then # Só instala se não estiver instalado
                     echo "[INSTALADO] - $package"
                 else
                     echo "Instalando o pacote: $package"
                     sudo apt install -y $package > /dev/null 2>&1
-                    if is_installed $package; then # Só instala se já não estiver instalado
+                    if is_installed $package; then
                         echo "[INSTALADO] - $package"
                     fi
                 fi
@@ -87,10 +89,11 @@ install_packages() {
 ## Função para adicionar repositorios contidos no arquivo repositories.txt ##
 add_repositories() {
     if [ -f "repositories.txt" ]; then
-        while IFS= read -r repository; do
-            if [[ -n "$repository" ]]; then
+        while IFS= read -r repository || [[ -n "$repository" ]]; do
+            # Ignorar linha em branco ou que começam com #
+            if [[ -n "$repository" && "$repository" != "#"* ]]; then
                 echo "Adicionando o repositório: $repository"
-                if sudo add-apt-repository -y "$repository" >/dev/null 2>&1; then
+                if sudo add-apt-repository -y "$repository" > /dev/null 2>&1; then
                     echo "O repositório $repository foi adicionado com sucesso."
                 else
                     echo "Falha ao adicionar o repositório $repository."
