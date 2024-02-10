@@ -2,6 +2,7 @@
 
 echo "[CONFIGURANDO] - Android"
 source /etc/profile
+source ~/.bashrc
 
 mkdir -p $ANDROID_HOME/cmdline-tools/latest
 wget https://dl.google.com/android/repository/commandlinetools-linux-9123335_latest.zip -O cmdline-tools.zip > /dev/null 2>&1
@@ -14,6 +15,13 @@ source /etc/profile
 yes | sdkmanager --install "platform-tools" "platforms;android-33" "build-tools;33.0.0" "sources;android-33" "system-images;android-33;android-desktop;x86_64" "emulator"
 
 echo "[CONFIGURADO] - Android"
+
+# Criar emulador 
+# avdmanager create avd -n google9 -k "system-images;android-33;android-desktop;x86_64" -d "Nexus 9"
+# avdmanager create avd -n Pixel6 -k "system-images;android-33;android-desktop;x86_64" -d "pixel_6"
+# Listar devices disponiveis
+# avdmanager list devices
+
 
 # lsof /dev/kvm
 # sudo service libvirtd restart

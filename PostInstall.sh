@@ -26,7 +26,8 @@ run_scripts() {
     for script in $scripts; do
         echo "[EXECUTANDO] - $script"
         sudo chmod +x $script
-        sudo sh $script
+        sh $script
+        echo "[FINALIZADO] - $script"
     done
 }
 
@@ -35,7 +36,7 @@ run_scripts() {
 # @return - Retorna 0 caso esteja instalado ou 1 caso não esteja instalado
 is_installed() {
     local software="$1"
-    if command -v "$software" > /dev/null 2>&1; then
+    if command -v "$software" > /dev/null 2>&1 || dpkg -s "$software" &> /dev/null; then
         return 0
     else
         return 1
@@ -60,7 +61,7 @@ install_snaps() {
             fi
         done < "snaps.txt"
     else
-        echo "Arquivo packages.txt não encontrado!"
+        echo "Arquivo snaps.txt não encontrado!"
     fi
 }
 

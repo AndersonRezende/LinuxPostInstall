@@ -1,4 +1,4 @@
-dbeaver-ce
+#dbeaver-ce
 discord
 postman
 spotify
