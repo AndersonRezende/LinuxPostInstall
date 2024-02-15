@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 start_time=$(date +%s)
 
 echo "INICIANDO INSTALAÇÃO E CONFIGURAÇÃO AUTOMATIZADA"
@@ -22,11 +23,12 @@ update() {
 # 1 - Adicionar um arquivo com ".sh" no final do nome do arquivo no diretório /scripts
 # 2 - Adicionar #!/bin/bash no topo do arquivo
 run_scripts() {
+    #scripts=$(find $(pwd)/scripts -type f -name "*.sh")
     scripts=$(ls -1 scripts/*.sh | sort)
     for script in $scripts; do
         echo "[EXECUTANDO] - $script"
         sudo chmod +x $script
-        sh $script
+        ./$script
         echo "[FINALIZADO] - $script"
     done
 }
@@ -36,7 +38,7 @@ run_scripts() {
 # @return - Retorna 0 caso esteja instalado ou 1 caso não esteja instalado
 is_installed() {
     local software="$1"
-    if command -v "$software" > /dev/null 2>&1 || dpkg -s "$software" &> /dev/null; then
+    if command -v "$software" > /dev/null 2>&1; then
         return 0
     else
         return 1
@@ -53,7 +55,7 @@ install_snaps() {
                     echo "[INSTALADO] - $snap"
                 else
                     echo "Instalando o pacote: $snap"
-                    sudo apt install -y $snap > /dev/null 2>&1
+                    sudo snap install $snap > /dev/null 2>&1
                     if is_installed $snap; then
                         echo "[INSTALADO] - $snap"
                     fi
@@ -61,7 +63,7 @@ install_snaps() {
             fi
         done < "snaps.txt"
     else
-        echo "Arquivo snaps.txt não encontrado!"
+        echo "Arquivo packages.txt não encontrado!"
     fi
 }
 

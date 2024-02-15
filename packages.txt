@@ -3,6 +3,9 @@ snapd
 virtualbox
 gparted
 curl
+net-tools
+unzip
+xclip
 
 apache2
 mysql-server

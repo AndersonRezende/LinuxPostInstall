@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 ######### DBEAVER #########
-if dpkg -s "dbeaver-ce" &> /dev/null || command -v "dbeaver-ce" > /dev/null 2>&1; then
+if dpkg -s "dbeaver-ce" &> /dev/null 2>&1 || command -v "dbeaver-ce" > /dev/null 2>&1; then
     echo "[INSTALADO] - dbeaver"
 else
     echo "[INSTALANDO] - dbeaver"
