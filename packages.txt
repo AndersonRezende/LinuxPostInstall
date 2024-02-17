@@ -2,6 +2,7 @@ git
 snapd
 virtualbox
 gparted
+gnome-disk-utility
 curl
 net-tools
 unzip

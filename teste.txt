@@ -1,0 +1,4 @@
+Adicionando texto
+Adicionando mais um pouco de texto
+/dev/nvme0n1p1 /mnt/Arquivos auto nosuid,nodev,nofail,x-gvfs-show,x-gvfs-name=Arquivos 0 0
+/dev/nvme0n1p1 /mnt/Arquivos auto nosuid,nodev,nofail,x-gvfs-show,x-gvfs-name=Arquivos 0 0
