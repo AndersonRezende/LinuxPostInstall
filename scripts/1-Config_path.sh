@@ -38,6 +38,7 @@ source /etc/profile
 fi
 echo "[CONFIGURADO] - Variáveis de ambiente"
 # Verificar o $HOME para apontar do usuário principal e nao do root
+# update-java-alternatives -l
 ######### CONFIGURAÇÃO DE PATH #########
 
 
