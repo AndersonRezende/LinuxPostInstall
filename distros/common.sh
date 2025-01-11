@@ -26,32 +26,30 @@ install_snaps() {
     echo "[VERIFICANDO SUPORTE A SNAPS NO SISTEMA]"
 
     # Configurar snapd para diferentes distribuições
-    if ! is_installed snap; then
-        if [ -f /etc/debian_version ]; then
-            echo "Instalando snapd no Debian/Ubuntu..."
-            sudo apt update -y > /dev/null 2>&1
-            sudo apt install -y snapd > /dev/null 2>&1
-        elif [ -f /etc/arch-release ]; then
-            echo "Instalando snapd no Arch Linux..."
-            sudo pacman -S --noconfirm snapd > /dev/null 2>&1
-            echo "Habilitando snapd.socket..."
-            sudo systemctl enable --now snapd.socket > /dev/null 2>&1
-            echo "Criando link simbólico para /snap..."
-            sudo ln -s /var/lib/snapd/snap /snap > /dev/null 2>&1
-        elif [ -f /etc/redhat-release ]; then
-            echo "Instalando snapd no Red Hat/CentOS..."
-            sudo yum install -y epel-release > /dev/null 2>&1
-            sudo yum install -y snapd > /dev/null 2>&1
-            sudo systemctl enable --now snapd.socket > /dev/null 2>&1
-            echo "Criando link simbólico para /snap..."
-            sudo ln -s /var/lib/snapd/snap /snap > /dev/null 2>&1
-        elif [ -f /etc/alpine-release ]; then
-            echo "Snap não é suportado no Alpine Linux diretamente. Ignorando..."
-            return
-        else
-            echo "Distribuição não suportada para Snap. Ignorando..."
-            return
-        fi
+    if [ -f /etc/debian_version ]; then
+        echo "Instalando snapd no Debian/Ubuntu..."
+        sudo apt update -y > /dev/null 2>&1
+        sudo apt install -y snapd > /dev/null 2>&1
+    elif [ -f /etc/arch-release ]; then
+        echo "Instalando snapd no Arch Linux..."
+        sudo pacman -S --noconfirm snapd > /dev/null 2>&1
+        echo "Habilitando snapd.socket..."
+        sudo systemctl enable --now snapd.socket > /dev/null 2>&1
+        echo "Criando link simbólico para /snap..."
+        sudo ln -s /var/lib/snapd/snap /snap > /dev/null 2>&1
+    elif [ -f /etc/redhat-release ]; then
+        echo "Instalando snapd no Red Hat/CentOS..."
+        sudo yum install -y epel-release > /dev/null 2>&1
+        sudo yum install -y snapd > /dev/null 2>&1
+        sudo systemctl enable --now snapd.socket > /dev/null 2>&1
+        echo "Criando link simbólico para /snap..."
+        sudo ln -s /var/lib/snapd/snap /snap > /dev/null 2>&1
+    elif [ -f /etc/alpine-release ]; then
+        echo "Snap não é suportado no Alpine Linux diretamente. Ignorando..."
+        return
+    else
+        echo "Distribuição não suportada para Snap. Ignorando..."
+        return
     fi
 
     local snaps_file=$(pwd)"/packages/snaps.txt"
