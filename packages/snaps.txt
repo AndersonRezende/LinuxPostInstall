@@ -1,8 +1,8 @@
-#dbeaver-ce
+dbeaver-ce
 discord
 postman
 spotify
-whatsapp-for-linux
+whatsapp-4linux
 telegram-desktop
 
 arduino
