@@ -1,6 +1,6 @@
 # LinuxPostInstall
 ### Objetivo
-Automatizar o processo de instalação e configuração de softwares após uma nova instalação de um ambiente Linux baseado em **Debian** (debian, ubuntu, mint...).
+Automatizar o processo de instalação e configuração de softwares após uma nova instalação de um ambiente Linux baseado em **Debian** (Debian, Ubuntu, Mint...) e **Arch** (Arch, Manjaro...).
 ### Executar
 ```
 sudo chmod +x PostInstall.sh
@@ -17,4 +17,5 @@ sudo ./ PostInstall.sh
     1. Para remover um item é necessário apenas apagar a linha que contém o item que desejar que não seja instalado.
 1. Para adição/remoção de scripts de configuração é necessário:
     1. Abrir o diretório scripts;
+    1. Abrir o diretório correspondente a distribuição Linux desejada ou no commons para o caso de um script genérico;
     1. Adicionar um arquivo cujo o nome finalize com .sh ou deletar o arquivo contendo o script não desejado.
