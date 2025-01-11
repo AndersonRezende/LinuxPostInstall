@@ -33,6 +33,7 @@ update
 add_repositories
 install_packages
 install_snaps
+update
 run_scripts
 update
 ######### EXECUÇÃO DAS ETAPAS #########
