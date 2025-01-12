@@ -31,7 +31,9 @@ source "$(dirname "$0")/distros/$DISTRO.sh"
 ######### EXECUÇÃO DAS ETAPAS #########
 update
 add_repositories
+update
 install_packages
+update
 install_snaps
 update
 run_scripts
