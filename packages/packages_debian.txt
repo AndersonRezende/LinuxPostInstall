@@ -29,6 +29,7 @@ php-opcache
 php-soap
 php-zip
 php-intl
+php-xdebug
 composer
 
 default-jdk

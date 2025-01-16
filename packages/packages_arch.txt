@@ -15,6 +15,7 @@ mariadb
 
 php
 php-apache
+xdebug
 composer
 
 jdk-openjdk
