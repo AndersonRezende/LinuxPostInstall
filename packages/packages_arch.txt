@@ -2,6 +2,7 @@ git
 squashfs-tools
 snapd
 virtualbox
+linux612-virtualbox-host-modules
 gparted
 gnome-disk-utility
 curl
