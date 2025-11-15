@@ -9,6 +9,16 @@ if command -v arduino > /dev/null 2>&1; then
 	sudo mv arduino/arduino-ide_2.3.6_Linux_64bit /opt/arduino 2>&1
 	sudo ln -s /opt/arduino/arduino-ide /usr/local/bin/arduino 2>&1
 	rm -rf arduino.zip arduino 2>&1
+	~/.local/share/applications/arduino.desktop << EOF
+[Desktop Entry]
+Name=Arduino IDE
+Comment=Integrated Development Environment for Arduino
+Exec=/opt/arduino/arduino-ide
+Icon=/opt/arduino/resources/app/resources/icons/512x512.png
+Terminal=false
+Type=Application
+Categories=Development;IDE;
+EOF
 	echo "[INSTALADO] - Arduino"
 else
 	echo "[INSTALADO] - Arduino"
