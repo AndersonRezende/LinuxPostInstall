@@ -12,7 +12,7 @@ is_installed() {
 
 # Função para executar scripts personalizados
 run_scripts() {
-    scripts=$(ls -1 "$(dirname "$0")/scripts/$DISTRO/"*.sh 2>/dev/null | sort)
+    scripts=$(ls -1 "$(pwd)/scripts/commons/"*.sh 2>/dev/null | sort)
     for script in $scripts; do
         echo "[EXECUTANDO] - $script"
         sudo chmod +x "$script"
