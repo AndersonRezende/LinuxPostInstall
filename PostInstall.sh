@@ -10,6 +10,8 @@ detect_distro() {
         echo "debian"
     elif [ -f /etc/arch-release ]; then
         echo "arch"
+    elif [ -f /etc/fedora-release ]; then
+        echo "fedora"
     else
         echo "unsupported"
     fi
