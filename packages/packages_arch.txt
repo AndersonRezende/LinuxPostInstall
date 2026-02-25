@@ -1,5 +1,6 @@
 git
 squashfs-tools
+flatpak
 snapd
 virtualbox
 linux612-virtualbox-host-modules

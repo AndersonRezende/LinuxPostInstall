@@ -38,6 +38,8 @@ install_packages
 update
 install_snaps
 update
+install_flatpak
+update
 run_scripts
 update
 ######### EXECUÇÃO DAS ETAPAS #########
