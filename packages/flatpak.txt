@@ -21,7 +21,7 @@ org.telegram.desktop
 ### SUBLIME
 com.sublimehq.SublimeText
 
-#phpstorm --classic
-#pycharm-professional --classic
-#intellij-idea-ultimate --classic
-#webstorm --classic
+#com.jetbrains.PhpStorm
+#com.jetbrains.PyCharm-Professional
+#com.jetbrains.Intellij-IDEA-Ultimate
+#com.jetbrains.WebStorm
