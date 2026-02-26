@@ -1,0 +1,27 @@
+### DBEAVER
+io.dbeaver.DBeaverCommunity
+
+### DISCORD
+com.discordapp.Discord
+
+### POSTMAN
+com.getpostman.Postman
+
+### SPOTIFY
+com.spotify.Client
+
+#whatsapp-4linux
+
+### TELEGRAM
+org.telegram.desktop
+
+### ARDUINO
+# cc.arduino.IDE2
+
+### SUBLIME
+com.sublimehq.SublimeText
+
+#com.jetbrains.PhpStorm
+#com.jetbrains.PyCharm-Professional
+#com.jetbrains.Intellij-IDEA-Ultimate
+#com.jetbrains.WebStorm

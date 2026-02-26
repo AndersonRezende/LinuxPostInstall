@@ -10,6 +10,11 @@ is_installed() {
     fi
 }
 
+is_flatpak_installed() {
+    local software="$1"
+    flatpak list --columns=name,application | grep -q "$software"
+}
+
 # Função para executar scripts personalizados
 run_scripts() {
     scripts=$(ls -1 "$(pwd)/scripts/commons/"*.sh 2>/dev/null | sort)
@@ -19,6 +24,33 @@ run_scripts() {
         ./"$script"
         echo "[FINALIZADO] - $script"
     done
+}
+
+# Função para instalar os flatpaks contidos no arquivo flatpak.txt
+install_flatpak() {
+    echo "[INSTALANDO FLATPAKS]"
+
+    local flatpak_file=$(pwd)"/packages/flatpak.txt"
+    if [ -f "$flatpak_file" ]; then
+        while IFS= read -r flatpakline || [[ -n "$flatpakline" ]]; do
+            IFS=' ' read -r flatpak parameter <<< "$flatpakline"
+            if [[ -n "$flatpak" && "$flatpak" != "#"* ]]; then
+                if is_flatpak_installed $flatpak $parameter; then
+                    echo "[INSTALADO] - $flatpak"
+                else
+                    echo "Instalando flatpak: $flatpak"
+                    flatpak install -y $flatpak $parameter> /dev/null 2>&1
+                    if is_flatpak_installed $flatpak; then
+                        echo "[INSTALADO] - $flatpak"
+                    else
+                        echo "Falha ao instalar o flatpak: $flatpak"
+                    fi
+                fi
+            fi
+        done < "$flatpak_file"
+    else
+        echo "Arquivo $flatpak_file não encontrado!"
+    fi
 }
 
 # Função para instalar os snaps contidos no arquivo snaps.txt
