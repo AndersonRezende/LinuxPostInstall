@@ -10,7 +10,7 @@ mkdir -p /tmp/jetbrains-toolbox
 sudo mkdir -p /opt/jetbrains-toolbox
 curl -L "$DOWNLOAD_URL" -o /tmp/jetbrains-toolbox/toolbox.tar.gz >/dev/null 2>&1
 
-tar -xzf /tmp/jetbrains-toolbox/toolbox.tar.gz -C /opt/jetbrains-toolbox --strip-components=1 >/dev/null 2>&1
-/opt/jetbrains-toolbox/jetbrains-toolbox >/dev/null 2>&1 &
+sudo tar -xzf /tmp/jetbrains-toolbox/toolbox.tar.gz -C /opt/jetbrains-toolbox --strip-components=1 >/dev/null 2>&1
+sudo /opt/jetbrains-toolbox/jetbrains-toolbox >/dev/null 2>&1 &
 
 echo "[INSTALADO] - JetBrains Toolbox"
