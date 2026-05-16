@@ -7,7 +7,7 @@ ssh-add ~/.ssh/id_rsa
 
 if command -v firefox > /dev/null 2>&1; then
 	cat ~/.ssh/id_rsa.pub | xclip 
-	firefox https://github.com/settings/key
+	firefox https://github.com/settings/keys
 	echo "Crie uma nova chave SSH no seu github e aperte CTRL + V no campo key."
 	echo "[CONFIGURADO] - SSH key"
 else
